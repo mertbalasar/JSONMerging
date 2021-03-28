@@ -1,0 +1,4 @@
+redis
+grpcio
+protobuf
+google

@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  redis:
+    image: redis
+    container_name: redis
+    restart: on-failure
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+  start-python-server:
+    build: ./python_start_server
+    ports:
+      - "5000:5000"
+    depends_on:
+      - redis
+  start-python-client:
+    build: ./python_start_client
+    ports:
+      - "5001:5001"
+    depends_on:
+      - start-python-server
+  start-python-write:
+    build: ./python_start_write
+    ports:
+      - "5002:5002"
+    depends_on:
+      - start-python-client
